@@ -15,7 +15,7 @@ class Item(ItemBase):
     owner_id: int
 
     class Config:
-        from_attributes = True
+      from_attributes = True
 
 
 class UserBase(BaseModel):
@@ -32,4 +32,4 @@ class User(UserBase):
     items: list[Item] = []
 
     class Config:
-        from_attributes = True
+      from_attributes = True
