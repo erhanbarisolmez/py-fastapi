@@ -36,3 +36,8 @@ def create_user_item(db: Session, item: schemas.ItemCreate, user_id: int):
     db.refresh(db_item)
     return db_item
   
+
+
+#Kullanıcıdan gelen parolayı karma hale getirmek için bir yardımcı program işlevi oluşturun.
+#Ve alınan şifrenin depolanan karma ile eşleşip eşleşmediğini doğrulamak için başka bir yardımcı program.
+#Ve bir kullanıcının kimliğini doğrulamak ve geri döndürmek için bir tane daha.
