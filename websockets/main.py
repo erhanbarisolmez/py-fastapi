@@ -1,5 +1,9 @@
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+
+from fastapi.testclient import TestClient
+from fastapi.websockets import WebSocket
+
 
 app = FastAPI()
 
@@ -49,3 +53,31 @@ async def websocket_endpoint(websocket: WebSocket):
     while True:
         data = await websocket.receive_text()
         await websocket.send_text(f"Message text was: {data}")
+        
+        
+        
+# WebSocket testi
+
+@app.get("/r")
+async def read_main():
+    return {"msg": "Hello world"}
+
+
+@app.websocket("ws2")
+async def websocket(websocket: WebSocket):
+    await websocket.accept()
+    await websocket.send_json({"msg" : "Hello WebSocket"})
+    await websocket.close()
+    
+def test_read_main():
+    client = TestClient(app)
+    response = client.get("/r")
+    assert response.status_code == 200
+    assert response.json() == {"msg": "Hello world"}
+
+def test_websocket():
+    client = TestClient(app)
+    with client.websocket_connect("/ws2") as websocket:
+        data = websocket.receive_json()
+        assert data == {"msg": "Hello WebSocket"}
+    

@@ -7,7 +7,6 @@ def fake_answer_to_everything_ml_model(x: float):
 
 ml_models = {}
 
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
   # Load the ML model
@@ -22,3 +21,4 @@ app = FastAPI(lifespan=lifespan)
 async def predict(x: float):
   result = ml_models["answer_to_everything"](x)
   return {"result": result}
+
